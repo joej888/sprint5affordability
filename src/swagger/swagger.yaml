@@ -39,7 +39,7 @@ paths:
         200:
           description: Success
           schema:
-            $ref: "#/definitions/DealersProductOffering"
+            $ref: "#/definitions/AffordabilityCheck"
         400:
           description: Missing required input parameter
         401:
@@ -53,63 +53,31 @@ paths:
 
 # complex objects have schema definitions
 definitions:
-  DealersProductOffering:
+  AffordabilityCheck:
     type: object
     properties:
-      messages:
-        type: array
-        items:
-          type: string
-      result:
+      productOfferingQualificationItem:
         type: array
         items:
           type: object
           properties:
-            dealsheetNumber:
-              type: string
-            dealDescription:
-              type: string
-            dealType:
-              type: string
-            numberOfAccessory:
-              type: string
-            packageCode:
-              type: string
-            pricePlan:
-              type: string
-            tarriffDescription:
-              type: string
-            addDate:
-              type: string
-            fromDate:
-              type: string
-            toDate:
-              type: string
-            contractMonths:
-              type: number
-            numberOfPhones:
-              type: number
-            financedHandset:
-              type: string
-            stockCode:
-              type: string
-            device:
-              type: string
-            secondaryProductCode:
-              type: number
-            handsetInstallment:
-              type: number
-            subscriptionValue:
-              type: number
-            dealValue:
-              type: number
-            groupId:
-              type: string
-            channel:
-              type: string
-            cashPayIn:
-              type: number
-      successful:
-          type: string
-      code:
-          type: number
+            product:
+              type: object
+              properties:
+                description:
+                  type: string
+                productCharacteristic:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      value:
+                        type: string
+
+
+
+
+
+
