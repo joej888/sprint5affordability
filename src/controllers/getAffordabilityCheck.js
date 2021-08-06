@@ -34,8 +34,6 @@ exports.handler = async function getAffordabilityCheck(req, res, next) {
 
   const creditProfileResponse = await creditService.getCreditFilters(req, creditParams);
 
-  console.log(creditProfileResponse);
-
   if (!creditProfileResponse.ok) {
     affordabilityCheckErr.inc();
     return next(creditProfileResponse.error);

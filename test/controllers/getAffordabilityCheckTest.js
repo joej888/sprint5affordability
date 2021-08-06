@@ -73,15 +73,67 @@ describe('Get Dealers Product Offering', function () {
       field: req.query.field
     };
 
-    customerServiceStub.withArgs(req, customerParams).resolves(success.mockCustomerInfo);
-    creditServiceStub.withArgs(req, expectedParams).resolves(success.mockCreditFilter);
+    const creditParams = {
+      headers: req.headers,
+      creditProfile: {
+        portfolioId: 'P0300',
+        defaultLimit: '200',
+        scndyInstlmntThrshld: '50',
+        SecTarrifLimit: '552.63',
+        ScndyPortflioId: 'P0420',
+        instlmntThrshld: '50.0',
+        scndyFinIndcator: 'Y',
+        voluntary: '',
+        TarrifLimit: '552.63',
+        FinIndcator: 'N',
+        mandatory: '-1.0',
+        SecHandsetLimit: '19999.0',
+        HandsetLimit: '19999.0'
+      }
+    };
 
-    console.log(req, res, next);
+    customerServiceStub.withArgs(req, customerParams).resolves(success.mockCustomerInfo);
+    creditServiceStub.withArgs(req, creditParams).resolves(success.mockCreditFilter);
     await controller(req, res, next);
     expect(res._getStatusCode()).to.equal(httpStatus.OK);
     const response = JSON.parse(res._getData());
 
     expect(response).to.deep.equal(expected.data);
+  });
+
+  it('invokes error middleware correctly when ok is false', async () => {
+
+    const customerParams = {
+      headers: req.headers,
+      idNumber: req.params.idNumber,
+      idType: req.query.idType,
+      field: req.query.field
+    };
+
+    const creditParams = {
+      headers: req.headers,
+      creditProfile: {
+        portfolioId: 'P0300',
+        defaultLimit: '200',
+        scndyInstlmntThrshld: '50',
+        SecTarrifLimit: '552.63',
+        ScndyPortflioId: 'P0420',
+        instlmntThrshld: '50.0',
+        scndyFinIndcator: 'Y',
+        voluntary: '',
+        TarrifLimit: '552.63',
+        FinIndcator: 'N',
+        mandatory: '-1.0',
+        SecHandsetLimit: '19999.0',
+        HandsetLimit: '19999.0'
+      }
+    };
+
+    customerServiceStub.withArgs(req, customerParams).resolves(failure.mock);
+    creditServiceStub.withArgs(req, creditParams).resolves(failure.mock);
+    await controller(req, res, next);
+    assert.calledOnce(next);
+    assert.calledWith(next, failure.mock.error);
   });
 
 });

@@ -34,12 +34,19 @@ const success = {
       }
     }
   },
-  mockCreditFilter:{
+  mockCreditFilter: {
     ok: true,
-    status: 200,
     data: {
-      result: {
-
+      status: 200,
+      data: {
+        result: {
+          creditFilter: {
+            total_monthly_payment: '552.63',
+            financeIndicator: 'Y',
+            deviceInstallment: null,
+            message: 'Based on your credit profile, we can offer you deals with a device and a plan '
+          }
+        }
       }
     }
   }
@@ -47,29 +54,27 @@ const success = {
 
 const expected = {
   data: {
-    result: {
-      productOfferingQualificationItem: [
-        {
-          product: {
-            description: 'Based on your credit profile, we can offer you deals with a device and a plan ',
-            productCharacteristic: [
-              {
-                name: 'total_monthly_payment',
-                value: '552.63'
-              },
-              {
-                name: 'financeIndicator',
-                value: 'Y'
-              },
-              {
-                name: 'deviceInstallment',
-                value: null
-              }
-            ]
-          }
+    productOfferingQualificationItem: [
+      {
+        product: {
+          description: 'Based on your credit profile, we can offer you deals with a device and a plan ',
+          productCharacteristic: [
+            {
+              name: 'total_monthly_payment',
+              value: '552.63'
+            },
+            {
+              name: 'financeIndicator',
+              value: 'Y'
+            },
+            {
+              name: 'deviceInstallment',
+              value: null
+            }
+          ]
         }
-      ]
-    }
+      }
+    ]
   }
 };
 
