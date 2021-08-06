@@ -1,0 +1,115 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Upgrade Journey
+tags:
+  - name: Affordability Check
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /tmf-api/productOfferingQualification/v4/customers/{idNumber}/information:
+    get:
+      tags:
+        - "Affordability Check"
+      operationId: getAffordabilityCheck
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: idNumber
+          type: string
+          required: true
+        - in: query
+          name: field
+          type: string
+          required: true
+        - in: query
+          name: idType
+          type: string
+          required: true
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/DealersProductOffering"
+        400:
+          description: Missing required input parameter
+        401:
+          description: Not authorized
+        424:
+          description: Upstream call failed with a 500. Response will be identical to upstream failure
+        500:
+          description: Technical error occured, service failure.
+  /swagger:
+    x-swagger-pipe: swagger_raw
+
+# complex objects have schema definitions
+definitions:
+  DealersProductOffering:
+    type: object
+    properties:
+      messages:
+        type: array
+        items:
+          type: string
+      result:
+        type: array
+        items:
+          type: object
+          properties:
+            dealsheetNumber:
+              type: string
+            dealDescription:
+              type: string
+            dealType:
+              type: string
+            numberOfAccessory:
+              type: string
+            packageCode:
+              type: string
+            pricePlan:
+              type: string
+            tarriffDescription:
+              type: string
+            addDate:
+              type: string
+            fromDate:
+              type: string
+            toDate:
+              type: string
+            contractMonths:
+              type: number
+            numberOfPhones:
+              type: number
+            financedHandset:
+              type: string
+            stockCode:
+              type: string
+            device:
+              type: string
+            secondaryProductCode:
+              type: number
+            handsetInstallment:
+              type: number
+            subscriptionValue:
+              type: number
+            dealValue:
+              type: number
+            groupId:
+              type: string
+            channel:
+              type: string
+            cashPayIn:
+              type: number
+      successful:
+          type: string
+      code:
+          type: number

@@ -1,0 +1,61 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: node-restify
+        env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-environment
+              key: activeProfile
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-journey-upgrade
+              key: log.level
+        - name: SENTRY_DSN
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-journey-upgrade
+              key: sentry.dsn
+        - name: SENTRY_MAX_BREADCRUMBS
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-journey-upgrade
+              key: sentry.maxBreadcrumbs
+        - name: SENTRY_ENABLED
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-journey-upgrade
+              key: sentry.enabled
+        - name: SENTRY_PROXY
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-journey-upgrade
+              key: sentry.httpProxy
+        - name: SENTRY_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-journey-upgrade
+              key: sentry.env
+        - name: JWT_TOKEN
+          valueFrom:
+            configMapKeyRef:
+              name: vod-ms-oauth
+              key: security.oauth2.resource.jwt.keyValue
+        resources:
+            limits:
+              cpu: 800m
+              memory: 700Mi
+            requests:
+              cpu: 200m
+              memory: 500Mi

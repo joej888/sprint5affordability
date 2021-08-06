@@ -1,0 +1,3 @@
+data:
+  sentry.enabled: "true"
+  sentry.env: "production"
